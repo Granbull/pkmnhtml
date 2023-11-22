@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css"> <!-- Add your custom CSS file here -->
+    <title>Comparador</title>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-pink navbar-expand-md">
+        <div class="container">
+            <a class="navbar-brand" href="main.html"><img src="icon.gif" alt="Icon Image" width="30" height="30"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pokedex.html">[Speed Dex]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="EV.html">[Comparador]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="qeep.html">[Quem é esse Pokémon?]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hof.php">[Hall of Fame]</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ml-auto d-none d-md-block">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">[Login]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">[Registro]</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4 custom-container">
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Pokémon Stats Comparison</title>
+            <style>
+                body {
+                    font-family: 'Arial', sans-serif;
+                    text-align: center;
+                    margin: 20px;
+                }
+                table {
+                    margin: 20px auto;
+                    border-collapse: collapse;
+                    width: 80%;
+                }
+                table, th, td {
+                    border: 1px solid pink;
+                }
+                th, td {
+                    padding: 10px;
+                }
+                th {
+                    background-color: pink;
+                }
+                .higher-value {
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+        }
+        th {
+            background-color: pink;
+        }
+        .higher-value {
+            font-weight: bold;
+        }
+        .pokemon-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.comparison-table th, .comparison-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+    </style>
+</head>
+<body>
+    <h1>Comparador de Pokémon:</h1>
+    <input type="text" id="pokemonName1" placeholder="Seu Pokémon">
+
+    <input type="text" id="pokemonName2" placeholder="Pokémon oponente">
+
+    <button onclick="comparePokemonStats()">Comparar</button>
+
+    <div id="result"></div>
+
+    <script>
+        function comparePokemonStats() {
+            const pokemonName1 = document.getElementById('pokemonName1').value.toLowerCase();
+            const pokemonName2 = document.getElementById('pokemonName2').value.toLowerCase();
+
+            // API
+            const apiUrl1 = `https://pokeapi.co/api/v2/pokemon/${pokemonName1}/`;
+            const apiUrl2 = `https://pokeapi.co/api/v2/pokemon/${pokemonName2}/`;
+
+            fetch(apiUrl1)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data1 => {
+                    fetch(apiUrl2)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data2 => {
+                            displayComparison(data1, data2);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching Pokémon data for Pokemon 2:', error.message);
+                            displayComparisonError();
+                        });
+                })
+                .catch(error => {
+                    console.error('Error fetching Pokémon data for Pokemon 1:', error.message);
+                    displayComparisonError();
+                });
+        }
+
+        function displayComparison(data1, data2) {
+    const statsComparison = compareStats(data1.stats, data2.stats);
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `
+        <table class="comparison-table">
+            <tr>
+                <th>Stat</th>
+                <th>
+                    <img src="${data1.sprites.other['official-artwork'].front_default}" alt="${data1.name}" class="pokemon-icon">
+                </th>
+                <th>
+                    <img src="${data2.sprites.other['official-artwork'].front_default}" alt="${data2.name}" class="pokemon-icon">
+                </th>
+            </tr>
+            <tr>
+                <td>HP</td>
+                <td class="${statsComparison.hp < 0 ? 'higher-value' : ''}">${data1.stats[0].base_stat}</td>
+                <td class="${statsComparison.hp > 0 ? 'higher-value' : ''}">${data2.stats[0].base_stat}</td>
+            </tr>
+            <tr>
+                <td>Attack</td>
+                <td class="${statsComparison.attack < 0 ? 'higher-value' : ''}">${data1.stats[1].base_stat}</td>
+                <td class="${statsComparison.attack > 0 ? 'higher-value' : ''}">${data2.stats[1].base_stat}</td>
+            </tr>
+            <tr>
+                <td>Defense</td>
+                <td class="${statsComparison.defense < 0 ? 'higher-value' : ''}">${data1.stats[2].base_stat}</td>
+                <td class="${statsComparison.defense > 0 ? 'higher-value' : ''}">${data2.stats[2].base_stat}</td>
+            </tr>
+            <tr>
+                <td>Special Attack</td>
+                <td class="${statsComparison.special_attack < 0 ? 'higher-value' : ''}">${data1.stats[3].base_stat}</td>
+                <td class="${statsComparison.special_attack > 0 ? 'higher-value' : ''}">${data2.stats[3].base_stat}</td>
+            </tr>
+            <tr>
+                <td>Special Defense</td>
+                <td class="${statsComparison.special_defense < 0 ? 'higher-value' : ''}">${data1.stats[4].base_stat}</td>
+                <td class="${statsComparison.special_defense > 0 ? 'higher-value' : ''}">${data2.stats[4].base_stat}</td>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td class="${statsComparison.speed < 0 ? 'higher-value' : ''}">${data1.stats[5].base_stat}</td>
+                <td class="${statsComparison.speed > 0 ? 'higher-value' : ''}">${data2.stats[5].base_stat}</td>
+            </tr>
+        </table>
+    `;
+}
+
+        function displayComparisonError() {
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = 'Verifique o nome dos Pokémon e tente novamente.';
+        }
+
+        function compareStats(stats1, stats2) {
+            const comparison = {
+                hp: stats2[0].base_stat - stats1[0].base_stat,
+                attack: stats2[1].base_stat - stats1[1].base_stat,
+                defense: stats2[2].base_stat - stats1[2].base_stat,
+                special_attack: stats2[3].base_stat - stats1[3].base_stat,
+                special_defense: stats2[4].base_stat - stats1[4].base_stat,
+                speed: stats2[5].base_stat - stats1[5].base_stat,
+            };
+            return comparison;
+        }
+    </script>
+</body>
+</html>
+        </body>
+        </html>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>Trabalho de HTML para Estácio</p>
+            <p>Feito com <i class="bi bi-heart-fill text-danger">♥</i> por Gabriel "Bim" Guedes</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

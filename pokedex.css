@@ -1,0 +1,94 @@
+.navbar-pink {
+    background-color: pink;
+}
+/* Add a shadow to the navigation bar */
+.navbar {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
+}
+
+.navbar-pink .navbar-nav .nav-item {
+    display: inline-block;
+    margin-right: 15px; /* Adjust the margin as needed for spacing */
+}
+
+body {
+    background-image: url('bg.png'); /* Specify the path to your "bg.png" file */
+    background-size: cover; /* Ensure the background image covers the entire viewport */
+    background-attachment: scroll; /* Make the background non-scrollable */
+}
+
+ /* Custom CSS for the container */
+ .custom-container {
+    background-image: url('containerbg.png'); /* Replace with your custom background image */
+    background-size: cover;
+    border-radius: 10px; /* Rounded corners */
+    padding: 50px; /* Add some padding for content spacing */
+}
+
+.caption-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background color */
+    padding: 10px; /* Add padding for spacing */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to a pointer when hovering */
+}
+
+.centered-button {
+    display: block;
+    margin: 0 auto; /* Center the button horizontally */
+    text-align: center; /* Center the text within the button */
+}
+.footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+#pokedex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+}
+
+.pokemon {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Set flex-direction to column for proper styling */
+    transition: background-color 0.3s; /* Add transition for a smooth effect */
+}
+
+.pokemon img {
+    max-width: 100%;
+    margin-bottom: 10px; /* Add some bottom margin for spacing between image and name */
+}
+
+.filter-container {
+    width: 100%;
+    margin-bottom: 10px; /* Add bottom margin for spacing between search bar and Pokémon */
+}
+
+.filter-input {
+    width: calc(100% - 20px); /* Adjust the width to leave room for padding */
+    padding: 5px; /* Add padding to the input for a better appearance */
+}
+
+.filter-button {
+    width: calc(100% - 20px); /* Adjust the width to leave room for padding */
+    padding: 5px;
+    background-color: pink; /* Add a background color to the filter button */
+    color: black; /* Set text color to white for better visibility */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add transition for a smooth effect */
+}
+
+/* Add hover effect for better interactivity */
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
+/* Adjust the hover effect for Pokémon elements */
+.pokemon:hover {
+    background-color: #f0f0f0; /* Add a subtle hover background color */
+}
